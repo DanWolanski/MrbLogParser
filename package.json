@@ -1,0 +1,25 @@
+{
+  "name": "mrblogparser",
+  "version": "1.0.0",
+  "description": "This is a log parse script for MRB",
+  "main": "mrblogparse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanWolanski/MrbLogParser.git"
+  },
+  "author": "Dan Wolanski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanWolanski/MrbLogParser/issues"
+  },
+  "homepage": "https://github.com/DanWolanski/MrbLogParser#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "line-reader": "^0.4.0",
+    "path": "^0.12.7",
+    "yargs": "^17.2.1"
+  }
+}

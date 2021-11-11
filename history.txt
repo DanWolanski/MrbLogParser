@@ -1,0 +1,47 @@
+tshark -Y sip -r mrbsip.pcap -T json -2 -e frame.time -e frame.time_epoch -e frame.number -e frame.protocols -e ip -e ip.src -e ip.dst -e sip.Method -e sip.Request-Line -e sip.Status-Line -e sip.Call-ID -e sip.Session-ID -e sip.To -e sip.From -e sip.CSeq -e sip.msg_body -e sip.msg_hdr
+tshark -Y sip -r mrbsip.pcap -T json -2 -e frame.time -e frame.time_epoch -e frame.number -e frame.protocols -e ip -e ip.src -e ip.dst -e sip.Method -e sip.Request-Line -e sip.Status-Line -e sip.Call-ID -e sip.Session-ID -e sip.To -e sip.From -e sip.CSeq -e sip.msg_body -e sip.msg_hdr > crap.txt
+cat crap.txt | jq .[] | jq ."_source"."layers" | jq ."sip.Call-ID".[]
+cat crap.txt | jq .[] | jq ."_source"."layers" 
+cat crap.txt | jq .[] | jq '."_source"."layers"."sip.Call-ID"' | jq -r .[] | sort -u  > mrbcall_list.txt
+tshark -Y sip -r xms1sip.pcap -T json -2 -e frame.time -e frame.time_epoch -e frame.number -e frame.protocols -e ip -e ip.src -e ip.dst -e sip.Method -e sip.Request-Line -e sip.Status-Line -e sip.Call-ID -e sip.Session-ID -e sip.To -e sip.From -e sip.CSeq -e sip.msg_body -e sip.msg_hdr > xms1.txt
+tshark -Y sip -r xms2sip.pcap -T json -2 -e frame.time -e frame.time_epoch -e frame.number -e frame.protocols -e ip -e ip.src -e ip.dst -e sip.Method -e sip.Request-Line -e sip.Status-Line -e sip.Call-ID -e sip.Session-ID -e sip.To -e sip.From -e sip.CSeq -e sip.msg_body -e sip.msg_hdr > xms2.txt
+mv crap.txt mrb.txt
+cat xms1.txt | jq .[] | jq '."_source"."layers"."sip.Call-ID"' | jq -r .[] | sort -u  > xms1_list.txt
+cat xms2.txt | jq .[] | jq '."_source"."layers"."sip.Call-ID"' | jq -r .[] | sort -u  > xms2_list.txt
+cat * | jq .INVITECount
+cat * | jq .INVITECount | grep 2
+cat * | jq .INVITECount | grep 2 | wc -l
+cat * | jq .isActive | select "false"
+cat * | jq '.isActive | select "false"'
+cat * | jq '.isActive | select("false")'
+cat * | jq '. | [.isActive,.cid] | join("|")' | grep true
+cat * | jq '. | [.isActive,.cid] | join("|")' | grep true 
+cat * | jq '. | [.isActive,.cid] | join("|")' | grep false
+cat * | jq '. | [.isActive,.cid,.confid,.isControl] | join(" ")' | grep false
+cat * | jq '. | [.isActive,.cid,.isControl,.confid] | join(" ")' | grep false
+cat * | jq '. | [.isActive,.cid,.isControl,.confid] | join(",")' | grep false
+cat * | jq -r '. | [.isActive,.cid,.isControl,.confid] | join(",")' | grep false
+cat * | jq -r '. | [.isActive,.cid,.isControl,.confid] | join(" ")' | sort -k 4
+cat * | jq -r '. | [.isActive,.cid,.isControl,.confid] | join(" ")' | sort -k 4
+cat * | jq -r '. | [.isActive,.cid,.isControl,.confid] | join(" ")' | sort -k 4
+cp ../parseout.js .cat * | jq -r '. | [.isActive,.cid,.isControl,.confid] | join(" ")' | sort -k 4
+cat * | jq -r '. | [.isActive,.cid,.isControl,.confid] | join(" ")' | sort -k 4
+cat * | jq -r '. | [.confid] | join(" ")' | sort -u | wc -l > conflist.txt
+cat * | jq -r '. | [.confid] | join(" ")' | sort -u > conflist.txt
+grep -h -f ../../conflist.txt * | sort -u
+cat * | jq -r '. | [.confid] | join(" ")' | sort -u > conflist_xms2.txt
+grep -h -f ../../conflist.txt * | sort -u > conflist_xms1.txt
+cat conflist_xms1.txt | cut -d'"' -f4 > conflist_xms1.txt 
+cat conflist_xms2.txt 
+comm -23 conflist_xms1.txt conflist_xms2.txt 
+comm -12 conflist_xms1.txt conflist_xms2.txt 
+cat conflist_xms1.txt 
+cp xms1/sipcallflows/conflist_xms1.txt .
+mv conflist_xms1.txt cl1.txt
+cat cl1.txt | cut -d'"' -f4 > conflist_xms1.txt 
+cat conflist_xms1.txt 
+comm -23 conflist_xms1.txt conflist_xms2.txt 
+comm -23 conflist_xms1.txt conflist_xms2.txt | wc -l
+comm -12 conflist_xms1.txt conflist_xms2.txt | wc -l
+comm -23 conflist_xms1.txt conflist_xms2.txt | wc -l
+comm -23 conflist_xms1.txt conflist_xms2.txt > conflist_notmoved.txt
